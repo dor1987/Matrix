@@ -1,6 +1,5 @@
 package ashush.matrix.adapters;
 
-import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,11 +21,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MainActivityRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
     private List<Item> mItemList;
     private OnItemClickListener mOnItemClickListener;
-    private Activity activity;
 
-    public MainActivityRecyclerViewAdapter(OnItemClickListener mOnItemClickListener,Activity activity) {
+    public MainActivityRecyclerViewAdapter(OnItemClickListener mOnItemClickListener) {
         this.mOnItemClickListener = mOnItemClickListener;
-        this.activity = activity;
     }
 
     @NonNull
@@ -42,14 +39,6 @@ public class MainActivityRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
         ((ItemViewHolder)viewHolder).mNativeName.setText(mItemList.get(i).getNativeName());
         ((ItemViewHolder)viewHolder).mName.setText(mItemList.get(i).getName());
 
-        //Set images
-        RequestOptions defaultOptions = new RequestOptions()
-                .error(R.drawable.ic_launcher_background);
-
-        Glide.with(viewHolder.itemView.getContext())
-                .setDefaultRequestOptions(defaultOptions)
-                .load(mItemList.get(i).getFlagURL())
-                .into(((ItemViewHolder)viewHolder).mFlag);
 
         //Set onClickListener
         ((ItemViewHolder) viewHolder).parentLayout.setOnClickListener(new View.OnClickListener(){
@@ -77,14 +66,12 @@ public class MainActivityRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
     protected class ItemViewHolder extends RecyclerView.ViewHolder {
         private TextView mNativeName;
         private TextView mName;
-        private CircleImageView mFlag;
         protected RelativeLayout parentLayout;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
             mNativeName = itemView.findViewById(R.id.native_name_text);
             mName = itemView.findViewById(R.id.name_text);
-            mFlag = itemView.findViewById(R.id.user_avatar);
             parentLayout = itemView.findViewById(R.id.item_parent_layout);
         }
     }

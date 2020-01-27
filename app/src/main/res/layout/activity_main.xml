@@ -7,6 +7,7 @@
     tools:context=".MainActivity">
 
 
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
@@ -18,4 +19,67 @@
 
 
     </android.support.v7.widget.RecyclerView>
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        app:fab_addButtonColorNormal="@color/pink"
+        app:fab_addButtonColorPressed="@color/darker_pink"
+        app:fab_addButtonPlusIconColor="@color/white"
+        app:fab_labelStyle="@style/customFab"
+        >
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/area_ascend_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fab_colorNormal="@color/white"
+        app:fab_colorPressed="@color/white"
+        app:fab_size="mini"
+        app:fab_icon="@drawable/ic_arrow_upward_black_24dp"
+        app:fab_title="Area ascending order"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/area_desc_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/white"
+            app:fab_colorPressed="@color/white"
+            app:fab_size="mini"
+            app:fab_icon="@drawable/ic_arrow_downward_black_24dp"
+            app:fab_title="Area descending order"/>
+
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/name_ascend_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/white"
+            app:fab_colorPressed="@color/white"
+            app:fab_size="mini"
+            app:fab_icon="@drawable/ic_arrow_upward_black_24dp"
+            app:fab_title="Name ascending order"/>
+
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/name_desc_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/white"
+            app:fab_colorPressed="@color/darker_white"
+            app:fab_size="mini"
+            app:fab_icon="@drawable/ic_arrow_downward_black_24dp"
+            app:fab_title="Name descending order"/>
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+    <ProgressBar
+        android:id="@+id/progressBar_cyclic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="50dp"
+        android:minWidth="50dp"
+        android:layout_gravity="center"
+        />
 </android.support.design.widget.CoordinatorLayout>
