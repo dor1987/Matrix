@@ -7,16 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-
 import java.util.List;
-
-import ashush.matrix.MainActivity;
 import ashush.matrix.R;
 import ashush.matrix.models.Item;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivityRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
     private List<Item> mItemList;

@@ -1,15 +1,12 @@
 package ashush.matrix;
-
 import android.content.Context;
 import android.util.Log;
 import android.widget.Filter;
 import android.widget.Filterable;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
 import ashush.matrix.models.Item;
 import ashush.matrix.reposetory.ItemRepository;
 
@@ -26,13 +23,14 @@ public class MainActivityController implements ItemRepository.NewDataListener, F
     private ArrayList<Item> itemListFull;
 
     public MainActivityController(Context context) {
-        itemRepository = new ItemRepository(context);
-        itemRepository.registerForNewDataUpdates(this);
+        itemRepository = new ItemRepository(context); // get instanse from item repository
+        itemRepository.registerForNewDataUpdates(this); // register to updates to get notify when new data is ready
         itemRepository.getItems();
     }
 
     @Override
     public void onNewData(ArrayList<Item> dataArrayList) {
+        //call back from repo
         itemList = dataArrayList;
         itemListFull = new ArrayList<>(itemList);
 
@@ -41,6 +39,7 @@ public class MainActivityController implements ItemRepository.NewDataListener, F
     }
 
     public void SortList(int sortBy, boolean isAscending) {
+        //Sorting the list according to the user needs
         ArrayList<Item> items = new ArrayList<Item>();
         items.addAll(itemList);
 
@@ -96,6 +95,7 @@ public class MainActivityController implements ItemRepository.NewDataListener, F
     }
 
     public void itemClicked(Item item) {
+        //comparing the lists to get the information about the country that borders the clicked item and sending the info to the View to show
         ArrayList<Item> mBorderList = new ArrayList<>();
 
         for(Item country : itemListFull){
@@ -104,10 +104,10 @@ public class MainActivityController implements ItemRepository.NewDataListener, F
                     mBorderList.add(country);
             }
         }
-
+        //if country have no border it will show empty note view
         if(mBorderList.isEmpty()){
             String[] placeHolder ={""};
-            Item emptyItem = new Item("","",0.0,"",placeHolder,"");
+            Item emptyItem = new Item("","",0.0,placeHolder,""); //using empty object so the adapter will know to put empty viewholder
             emptyItem.setType(EMPTY_TYPE);
             mBorderList.add(emptyItem);
         }
@@ -122,6 +122,7 @@ public class MainActivityController implements ItemRepository.NewDataListener, F
     }
 
     private  Filter filter = new Filter() {
+        //used by the searchview to filter result.
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
             List<Item> filteredList = new ArrayList<>();

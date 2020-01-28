@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,11 +19,8 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
-
 import com.getbase.floatingactionbutton.FloatingActionButton;
-
 import java.util.ArrayList;
-
 import ashush.matrix.adapters.CountryPopUpAdapter;
 import ashush.matrix.adapters.MainActivityRecyclerViewAdapter;
 import ashush.matrix.adapters.OnItemClickListener;
@@ -37,7 +33,6 @@ public class MainActivity extends AppCompatActivity  implements OnItemClickListe
     private RecyclerView mRecyclerView;
     private MainActivityRecyclerViewAdapter mAdapter;
     private MainActivityController mainActivityController;
-
     private PopupWindow countryWindow = null;
     private CountryPopUpAdapter popUpAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -50,6 +45,7 @@ public class MainActivity extends AppCompatActivity  implements OnItemClickListe
         setContentView(R.layout.activity_main);
         mainActivityController = new MainActivityController(getApplicationContext());
 
+        //block user input until data is avilable
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
@@ -68,17 +64,20 @@ public class MainActivity extends AppCompatActivity  implements OnItemClickListe
     @Override
     protected void onStart() {
         super.onStart();
+        //register to events from controller
         mainActivityController.registerForDataUpdates(this);
         mainActivityController.registerForOpenPopListener(this);
 
     }
 
     private void initFAB() {
+        //Init FAB and menu
         FloatingActionButton nameAscendBtn = findViewById(R.id.name_ascend_btn);
         FloatingActionButton nameDescBtn = findViewById(R.id.name_desc_btn);
         FloatingActionButton areaAscendBtn = findViewById(R.id.area_ascend_btn);
         FloatingActionButton areaDescBtn = findViewById(R.id.area_desc_btn);
 
+        //add on click listeners
         nameAscendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -123,13 +122,12 @@ public class MainActivity extends AppCompatActivity  implements OnItemClickListe
     @Override
     public void onItemclick(Item item) {
         mainActivityController.itemClicked(item);
-
     }
 
     @Override
     public void onDataChanged(ArrayList<Item> dataArrayList) {
-        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        progressBar.setVisibility(View.GONE);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE); //unblock user input
+        progressBar.setVisibility(View.GONE); //Remove progress  bar when data is ready
         mAdapter.setItems(dataArrayList);
     }
 
@@ -137,14 +135,14 @@ public class MainActivity extends AppCompatActivity  implements OnItemClickListe
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu,menu);
-
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        //Adding listeners to search view
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-            //not using this
+            //not using this, only using onTextChange
                 return false;
             }
 
@@ -159,9 +157,11 @@ public class MainActivity extends AppCompatActivity  implements OnItemClickListe
 
     @Override
     public void onOpenPopUp(ArrayList<Item> dataArrayList) {
+        //call back from the controller to show popup
         createPopUp(dataArrayList);
     }
     private void createPopUp(ArrayList<Item> borders){
+        // init popup
         LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View layout = layoutInflater.inflate(R.layout.country_pop_up_layout, null);
         recyclerView = layout.findViewById(R.id.coutnry_border_recyclerView_popup);
@@ -170,7 +170,6 @@ public class MainActivity extends AppCompatActivity  implements OnItemClickListe
         recyclerView.setLayoutManager(layoutManager);
         popUpAdapter = new CountryPopUpAdapter(borders);
         recyclerView.setAdapter(popUpAdapter);
-
         countryWindow = new PopupWindow(this);
         initPopUpGraphics(layout,countryWindow);
         countryWindow.setOutsideTouchable(false);
@@ -178,6 +177,7 @@ public class MainActivity extends AppCompatActivity  implements OnItemClickListe
     }
 
     public void initPopUpGraphics(View layout, PopupWindow window){
+        //additional graphics definition for pop up
         window.setContentView(layout);
         window.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         window.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -189,6 +189,7 @@ public class MainActivity extends AppCompatActivity  implements OnItemClickListe
 
     @Override
     protected void onStop() {
+        //unregister from events
         mainActivityController.unRegisterForDataUpdates();
         mainActivityController.unRegisterForOpenPopListener();
         super.onStop();

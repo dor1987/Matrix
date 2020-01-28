@@ -1,28 +1,23 @@
 package ashush.matrix.models;
 
-import com.google.gson.annotations.SerializedName;
 
 import java.util.Arrays;
 
 import static ashush.matrix.utils.Constants.COUNTRY_TYPE;
-import static ashush.matrix.utils.Constants.EMPTY_TYPE;
 
 public class Item {
     private String nativeName;
     private String name;
     private Double area;
-    @SerializedName("flag")
-    private String flagURL;
     private String[] borders;
     private String alpha3Code;
     private int type;
 
 
-    public Item(String nativeName, String name, Double area, String flagURL, String[] borders, String alpha3Code) {
+    public Item(String nativeName, String name, Double area, String[] borders, String alpha3Code) {
         this.nativeName = nativeName;
         this.name = name;
         this.area = area;
-        this.flagURL = flagURL;
         this.borders = borders;
         this.alpha3Code = alpha3Code;
         this.type = COUNTRY_TYPE;
@@ -63,13 +58,6 @@ public class Item {
         this.alpha3Code = alpha3Code;
     }
 
-    public String getFlagURL() {
-        return flagURL;
-    }
-
-    public void setFlagURL(String flagURL) {
-        this.flagURL = flagURL;
-    }
 
     public String[] getBorders() {
         return borders;
@@ -93,9 +81,9 @@ public class Item {
                 "nativeName='" + nativeName + '\'' +
                 ", name='" + name + '\'' +
                 ", area=" + area +
-                ", flagURL='" + flagURL + '\'' +
                 ", borders=" + Arrays.toString(borders) +
                 ", alpha3Code='" + alpha3Code + '\'' +
+                ", type=" + type +
                 '}';
     }
 }

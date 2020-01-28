@@ -16,6 +16,6 @@
     <style name="TextStyle" parent="android:Theme">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">#636e72</item>
-        <item name="android:fontFamily">cursive</item>
+        <item name="android:fontFamily">sans-serif</item>
     </style>
 </resources>

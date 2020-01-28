@@ -8,7 +8,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
@@ -37,6 +36,7 @@ public class ItemRepository {
 
 
     public void getItems(){
+        //Async call to rest to get Countries info
         final String url = BASE_URL+"all";
         dataList.clear();
         // prepare the Request
@@ -59,7 +59,7 @@ public class ItemRepository {
                             }
                         }
 
-                        if(mNewDataListener != null)
+                        if(mNewDataListener != null)//notify controller on new data
                             mNewDataListener.onNewData(dataList);
                     }
                 },
