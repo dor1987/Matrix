@@ -23,7 +23,7 @@ public class MainActivityController implements ItemRepository.NewDataListener, F
     private ArrayList<Item> itemListFull;
 
     public MainActivityController(Context context) {
-        itemRepository = new ItemRepository(context); // get instanse from item repository
+        itemRepository = new ItemRepository(context); // get instance from item repository
         itemRepository.registerForNewDataUpdates(this); // register to updates to get notify when new data is ready
         itemRepository.getItems();
     }
